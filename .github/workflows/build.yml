@@ -1,6 +1,6 @@
-name: build
+name: Publish to Registry
 
-on:  # yamllint disable-line rule:truthy
+on:
   push:
     tags:
       - "*"
@@ -9,20 +9,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with: # https://github.com/stefanzweifel/git-auto-commit-action#checkout-the-correct-branch
-            ref: ${{ github.head_ref }}
-      - uses: actions/setup-python@v2
-
-      - name: Publish to Docker Repository
-        uses: elgohr/Publish-Docker-Github-Action@master
-        with:
-          name: ${{ secrets.DOCKER_REPO }}
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          dockerfile: Dockerfile
-          workdir: .
-          tags: "latest,${{ github.ref }}"
+    - uses: actions/checkout@v3
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v4
+      with:
+        name: montenegroit/klara
+        username: ${{ github.actor }}
+        password: ${{ secrets.PACKAGE_TOKEN }}
+        registry: ghcr.io
 
   deploy:
     needs: build
