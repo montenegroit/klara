@@ -10,7 +10,10 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
 from bot.config import config
-from bot.handlers.start import router as handlers_router
+from bot.handlers.bans import router as ban_router
+from bot.handlers.help import router as help_router
+from bot.handlers.reminder import router as reminder_router
+
 from bot.middlewares.db import DbSessionMiddleware
 
 
@@ -48,8 +51,11 @@ async def main():
     dp.callback_query.middleware(DbSessionMiddleware(db_pool))
 
     # Routing
-    dp.include_router(handlers_router)
+    dp.include_router(ban_router)
+    dp.include_router(help_router)
+    dp.include_router(reminder_router)
 
+    # Start
     try:
         await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
     finally:

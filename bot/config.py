@@ -14,6 +14,8 @@ class Config(BaseSettings):
     webhook_domain: Optional[str]
     webhook_path: Optional[str]
     super_admin_id: Optional[int]
+    github_token: Optional[str]
+    github_repo: Optional[str]
 
     @validator("bot_fsm_storage")
     def validate_bot_fsm_storage(cls, v):
