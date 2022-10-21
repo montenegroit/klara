@@ -17,5 +17,6 @@ def get_replicate(prompt: str) -> str:
         return "NSFW content detected. Try running it again, or try a different prompt."
     except ReplicateError:
         return "Limit"
+
     output = model.predict(prompt=prompt)
-    return output
+    return output[0]
