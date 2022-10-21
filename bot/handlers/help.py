@@ -13,9 +13,7 @@ _message = """
   !ro - Дать бан
   
 Список команд для донатеров:
-  /prompt описание на англ - нагенерить изображения по тексту со stable diffusion
-
-Хочешь увидеть меня бещ нечего - заходи <a href="https://github.com/montenegroit/klara"> сюда </a>
+  /prompt описание на англ - генератор изображения по тексту со stable diffusion
 
 """
 
