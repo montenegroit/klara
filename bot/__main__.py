@@ -13,6 +13,7 @@ from bot.config import config
 from bot.handlers.bans import router as ban_router
 from bot.handlers.help import router as help_router
 from bot.handlers.reminder import router as reminder_router
+from bot.handlers.replicate import router as prompt_router
 
 from bot.middlewares.db import DbSessionMiddleware
 
@@ -52,6 +53,7 @@ async def main():
 
     # Routing
     dp.include_router(ban_router)
+    dp.include_router(prompt_router)
     dp.include_router(help_router)
     dp.include_router(reminder_router)
 

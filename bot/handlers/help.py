@@ -13,16 +13,14 @@ _message = """
   !ro - Дать бан
   
 Список команд для донатеров:
-  - пока не придумала, пишите Пахану @i63phc
-  
+  /prompt описание на англ - нагенерить изображения по тексту со stable diffusion
+
+Хочешь увидеть меня бещ нечего - заходи <a href="https://github.com/montenegroit/klara"> сюда </a>
+
 """
 
 
 @router.message(commands="help")
 async def test_admin_message(message: types.Message):
-    print(message)
-
     version = await get_last_release_version()
     await message.answer(_message + f"<i><a href='#'>{version}</a></i>")
-
-    # https://github.com/montenegroit/klara

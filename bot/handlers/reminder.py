@@ -33,9 +33,9 @@ reminder_text = """<b>Напоминалочка</b>
 
 
 @router.message()
-async def test_admin_message(message: types.Message):
+async def temp_reminder_100(message: types.Message):
     global temp_count
-    if temp_count > 1000:
+    if temp_count > 100:
         await message.answer(reminder_text)
         temp_count = 0
     else:
