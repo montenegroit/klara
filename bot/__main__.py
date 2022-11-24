@@ -16,6 +16,7 @@ from bot.handlers.reminder import router as reminder_router
 from bot.handlers.replicate import router as prompt_router
 
 from bot.middlewares.db import DbSessionMiddleware
+from bot.middlewares.save_user import SaveUserIDMiddleware
 
 
 async def main():
@@ -49,6 +50,7 @@ async def main():
 
     # Register middlewares
     dp.message.middleware(DbSessionMiddleware(db_pool))
+    dp.message.middleware(SaveUserIDMiddleware())
     dp.callback_query.middleware(DbSessionMiddleware(db_pool))
 
     # Routing
