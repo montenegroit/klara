@@ -34,7 +34,10 @@ class StatsMessageCount(Base):
             VALUES (:from_chat_id, :from_user_id, 1)
             ON CONFLICT ON CONSTRAINT unq_user_from_chat_id_from_user_id
             DO
-            UPDATE SET count = messages_count.count + 1
+            UPDATE
+            SET
+                count = messages_count.count + 1,
+                updated_at = CURRENT_TIMESTAMP
         """
         try:
             await session.execute(
@@ -45,5 +48,3 @@ class StatsMessageCount(Base):
         except Exception as e:
             print("Error: %s", e)
             await session.rollback()
-        finally:
-            await session.close()

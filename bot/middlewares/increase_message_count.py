@@ -4,7 +4,7 @@ from aiogram.types import Message
 from bot.models.stats.models import StatsMessageCount
 
 
-class SaveUserIDMiddleware(BaseMiddleware):
+class IncreaseCountUserMessagesMiddleware(BaseMiddleware):
     async def __call__(
         self,
         handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
