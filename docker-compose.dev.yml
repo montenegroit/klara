@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  redis:
+    extends:
+      file: docker-compose.yml
+      service: redis
+
+  postgresql:
+    extends:
+      file: docker-compose.yml
+      service: postgresql
+
+  backend:
+    extends:
+      file: docker-compose.yml
+      service: backend
+    depends_on:
+      - postgresql
+      - redis
+    volumes:
+      - .:/bot
