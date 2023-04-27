@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 router = Router()
 
 
-@router.message(regexp=r'^/weather (.+)$')
+@router.message(commands=r'^/weather (.+)$')
 async def weather_handler(message: types.Message):
     match = re.match(r'^/weather (.+)$', message.text)
     city = match.group(1)
