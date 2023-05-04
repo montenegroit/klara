@@ -1,24 +1,53 @@
 import logging
-from bot.config import config
-from aiogram import types
+import asyncio
 import httpx
+
+from aiogram import types
 from geopy.geocoders import Nominatim
+
+from bot.config import config
 
 logger = logging.getLogger(__name__)
 
-OPEN_WEATHER_TOKEN = config.open_weather_token
-WEATHER_STACK_TOKEN = config.weather_stack_token
 
-
-def get_coordinates(city_name):
+def get_coordinates(city_name: str) -> str or None:
     geolocator = Nominatim(user_agent="my_application")
-    location = geolocator.geocode(city_name, country_codes='me')
+    location = geolocator.geocode(city_name, country_codes="me")
     return location
 
 
-def get_temperature(json_data):
+def get_urls(latitude: float, longitude: float) -> list[(str, dict)]:
+    urls = [
+        (
+            "OpenWeather",
+            "http://api.openweathermap.org/data/2.5/weather",
+            {
+                "lat": latitude,
+                "lon": longitude,
+                "appid": config.open_weather_token,
+                "units": "metric",
+            },
+        ),
+        (
+            "WeatherStack",
+            "http://api.weatherstack.com/current",
+            {
+                "access_key": config.weather_stack_token,
+                "query": f"{latitude},{longitude}",
+            },
+        ),
+        (
+            "OpenMeteo",
+            "https://api.open-meteo.com/v1/forecast",
+            {"latitude": latitude, "longitude": longitude, "current_weather": "true"},
+        ),
+    ]
+    return urls
+
+
+def get_temperature(json_data: dict) -> int or float:
     for key, value in json_data.items():
-        if key in ['temp', 'temperature']:
+        if key in ["temp", "temperature"]:
             return value
         elif isinstance(value, dict):
             result = get_temperature(value)
@@ -33,23 +62,19 @@ async def get_weather(message: types.Message, city: str):
     except AttributeError:
         await message.answer("Проверь название города")
     else:
-        URLS = [('OpenWeather', 'http://api.openweathermap.org/data/2.5/weather',
-                 {'lat': latitude, 'lon': longitude, 'appid': OPEN_WEATHER_TOKEN, 'units': 'metric'}),
-                ('WeatherStack', 'http://api.weatherstack.com/current',
-                 {'access_key': WEATHER_STACK_TOKEN, 'query': city}),
-                ('OpenMeteo', 'https://api.open-meteo.com/v1/forecast',
-                 {'latitude': latitude, 'longitude': longitude, 'current_weather': 'true'})
-                ]
-
-        for name, url, params in URLS:
-            try:
-                async with httpx.AsyncClient() as client:
-                    response = await client.get(url, params=params)
-            except Exception:
-                await message.answer("Ошибка")
-            else:
-                json_data = response.json()
-                temperature = get_temperature(json_data)
-                await message.answer(f"Погода в городе {city} по данным {name}\n"
-                                     f"Температура: {temperature}C°")
-
+        urls = get_urls(latitude, longitude)
+        coro_list = []
+        async with httpx.AsyncClient() as client:
+            for name, url, params in urls:
+                coro_list.append((name, client.get(url, params=params)))
+            responses = await asyncio.gather(*[c[1] for c in coro_list])
+        data_res = {
+            c[0]: i.json() for i, c in zip(responses, coro_list) if i.status_code == 200
+        }
+        temperature = []
+        for name, data in data_res.items():
+            temperature.append((name, get_temperature(data)))
+        temperature_text = "\n".join(
+            f"{i}. {name}: {t} C°" for i, (name, t) in enumerate(temperature, start=1)
+        )
+        await message.answer(f"Температура в городе {city}:\n{temperature_text}")
