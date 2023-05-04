@@ -18,6 +18,7 @@ class Config(BaseSettings):
     github_repo: Optional[str]
     replicate_api_token: Optional[str]
 
+
     @validator("bot_fsm_storage")
     def validate_bot_fsm_storage(cls, v):
         if v not in ("memory", "redis"):
