@@ -27,7 +27,7 @@
 ```
 cp .env.example .env
 # add BOT_TOKEN
-docker-composer up -d
+docker-compose up -d
 ```
 
 

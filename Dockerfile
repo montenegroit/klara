@@ -8,6 +8,7 @@ WORKDIR /bot
 COPY req.txt .
 
 # Installing dependencies
+RUN python -m pip install --upgrade pip
 RUN pip install -r req.txt
 
 # Copying files into working directory
