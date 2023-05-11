@@ -3,9 +3,9 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from aiogram.client.telegram import TelegramAPIServer
-from aiogram.dispatcher.fsm.storage.memory import MemoryStorage
-from aiogram.dispatcher.fsm.storage.redis import RedisStorage
-from magic_filter import F
+from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.fsm.storage.redis import RedisStorage
+from aiogram import F
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
