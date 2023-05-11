@@ -27,8 +27,12 @@
 ```
 cp .env.example .env
 # add BOT_TOKEN
-docker-compose up -d
+docker-composer -f docker-compose.dev.yml up -d
 ```
 
+Чтобы оперативно рестартовать контейнер backend при изменениях можно поставить на локальный хост `nodemon` (`npm install --global nodemon`) и использовать его для мониторинга изменений в python-файлах:
+```
+nodemon --watch ./bot --ext py --exec 'docker-compose restart backend'
+```
 
 [![](https://badges.aleen42.com/src/buymeacoffee.svg)]()
