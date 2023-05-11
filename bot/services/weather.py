@@ -63,17 +63,15 @@ async def get_weather(message: types.Message, city: str):
         await message.answer("Проверь название города")
     else:
         urls = get_urls(latitude, longitude)
-        coro_list = []
         async with httpx.AsyncClient() as client:
-            for name, url, params in urls:
-                coro_list.append((name, client.get(url, params=params)))
-            responses = await asyncio.gather(*[c[1] for c in coro_list])
+            coro_list = [
+                (name, client.get(url, params=params)) for name, url, params in urls
+            ]
+            responses = await asyncio.gather(*(c[1] for c in coro_list))
         data_res = {
             c[0]: i.json() for i, c in zip(responses, coro_list) if i.status_code == 200
         }
-        temperature = []
-        for name, data in data_res.items():
-            temperature.append((name, get_temperature(data)))
+        temperature = [(name, get_temperature(data)) for name, data in data_res.items()]
         temperature_text = "\n".join(
             f"{i}. {name}: {t} C°" for i, (name, t) in enumerate(temperature, start=1)
         )
