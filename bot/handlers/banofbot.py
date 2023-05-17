@@ -40,8 +40,8 @@ async def ban_handler(message: types.Message, state: FSMContext) -> None:
 @router.callback_query(state=Poll.start_poll)
 async def polling_process(callback_query: types.CallbackQuery, state: FSMContext) -> None:
     data = await state.get_data()
-    yes_votes = data.get("yes", 0)
-    no_votes = data.get("no", 0)
+    yes_votes = data.get("yes_votes", 0)
+    no_votes = data.get("no_votes", 0)
     voter_ids = data.get("voter_ids", [])
 
     if callback_query.data == "yes":
