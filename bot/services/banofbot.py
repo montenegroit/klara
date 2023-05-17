@@ -17,9 +17,9 @@ def make_keyboard(yes_votes: int, no_votes: int) -> InlineKeyboardMarkup:
     )
     return keyboard
 
+ban_coefficient = 0.6
 
 async def ban_user(data: dict) -> bool:
-    ban_coefficient = 0.6
     voting_result = data.get("yes_votes", 0) / (
         data.get("yes_votes", 0) + data.get("no_votes", 0)
     )
