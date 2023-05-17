@@ -42,6 +42,7 @@ async def ban_handler(message: types.Message, state: FSMContext) -> None:
         ]
         await asyncio.gather(*to_do)
 
+min_count_of_votes = 10
 
 @router.callback_query(state=Poll.start_poll)
 async def polling_process(callback_query: types.CallbackQuery, state: FSMContext) -> None:
@@ -68,7 +69,6 @@ async def polling_process(callback_query: types.CallbackQuery, state: FSMContext
     ]
     await asyncio.gather(*to_do)
 
-    min_count_of_votes = 10
     if yes_votes + no_votes >= min_count_of_votes:
         await state.set_state(Poll.finish_poll)
 
