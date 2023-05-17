@@ -18,6 +18,7 @@ class Config(BaseSettings):
     github_repo: Optional[str]
     replicate_api_token: Optional[str]
 
+
     @validator("bot_fsm_storage")
     def validate_bot_fsm_storage(cls, v):
         if v not in ("memory", "redis"):
@@ -44,4 +45,13 @@ class Config(BaseSettings):
         env_nested_delimiter = "__"
 
 
-config = Config()
+class WeatherConfig(BaseSettings):
+    open_weather_token: Optional[str]
+    weather_stack_token: Optional[str]
+
+
+class FullConfig(Config, WeatherConfig):
+    pass
+
+
+config = FullConfig()
