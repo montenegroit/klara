@@ -1,4 +1,5 @@
 import logging
+import asyncio
 
 from aiogram import Router, types
 from aiogram.dispatcher.fsm.context import FSMContext
@@ -25,7 +26,6 @@ async def ban_handler(message: types.Message, state: FSMContext) -> None:
     else:
         msg = f"Забанить пользователя {user.first_name}?"
         yes_votes, no_votes = 0, 0
-        await message.reply(msg, reply_markup=make_keyboard(yes_votes, no_votes))
         message_to_delete = message.reply_to_message.message_id
         data = {
             "yes_votes": yes_votes,
@@ -33,8 +33,14 @@ async def ban_handler(message: types.Message, state: FSMContext) -> None:
             "user_to_ban": user.id,
             "message_to_delete": message_to_delete,
         }
-        await state.update_data(data)
-        await state.set_state(Poll.start_poll)
+        to_do = [
+            asyncio.ensure_future(
+                message.reply(msg, reply_markup=make_keyboard(yes_votes, no_votes))
+            ),
+            state.update_data(data),
+            state.set_state(Poll.start_poll),
+        ]
+        await asyncio.gather(*to_do)
 
 
 @router.callback_query(state=Poll.start_poll)
@@ -54,8 +60,13 @@ async def polling_process(callback_query: types.CallbackQuery, state: FSMContext
         return
     voter_ids.append(user_id)
 
-    await state.update_data(yes_votes=yes_votes, no_votes=no_votes, voter_ids=voter_ids)
-    await callback_query.message.edit_reply_markup(make_keyboard(yes_votes, no_votes))
+    to_do = [
+        state.update_data(yes_votes=yes_votes, no_votes=no_votes, voter_ids=voter_ids),
+        asyncio.ensure_future(
+            callback_query.message.edit_reply_markup(make_keyboard(yes_votes, no_votes))
+        ),
+    ]
+    await asyncio.gather(*to_do)
 
     min_count_of_votes = 10
     if yes_votes + no_votes >= min_count_of_votes:
@@ -70,5 +81,5 @@ async def end_polling(callback_query: types.CallbackQuery, state: FSMContext) ->
         await callback_query.message.answer("Пользователь забанен")
     else:
         await callback_query.message.answer("Бан отменяется")
-    await callback_query.message.delete()
-    await state.clear()
+    to_do = [asyncio.ensure_future(callback_query.message.delete()), state.clear()]
+    await asyncio.gather(*to_do)
