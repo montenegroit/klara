@@ -2,6 +2,7 @@ import logging
 from datetime import timedelta
 import aiogram.exceptions
 from aiogram import Router, methods, types
+from aiogram.filters import Command
 from aiogram.types import ChatPermissions
 from bot.config import config
 
@@ -9,7 +10,7 @@ logger = logging.getLogger(__name__)
 router = Router()
 
 
-@router.message(commands="ro", commands_prefix="!")
+@router.message(Command(commands='ro', prefix='!'))
 async def check(message: types.Message):
     # TODO: add all admin
     if message.from_user.id != config.super_admin_id:
