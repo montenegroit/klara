@@ -5,6 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 from bot.models.base import metadata
+from bot.config import config as app_config
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -25,6 +26,7 @@ target_metadata = metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+from bot.models.stats.models import *
 
 
 def run_migrations_offline():
@@ -39,7 +41,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = app_config.postgres_sync_dsn
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -58,8 +60,12 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
+    configuration = config.get_section(config.config_ini_section)
+    sqlalchemy_url = app_config.postgres_sync_dsn
+    configuration["sqlalchemy.url"] = sqlalchemy_url
+
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
+        configuration,
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )

@@ -18,6 +18,7 @@ from bot.handlers.weather import router as weather_router
 from bot.handlers.banofbot import router as new_ban_router
 
 from bot.middlewares.db import DbSessionMiddleware
+from bot.middlewares.increase_message_count import IncreaseCountUserMessagesMiddleware
 
 
 async def main():
@@ -51,6 +52,7 @@ async def main():
 
     # Register middlewares
     dp.message.middleware(DbSessionMiddleware(db_pool))
+    dp.message.middleware(IncreaseCountUserMessagesMiddleware())
     dp.callback_query.middleware(DbSessionMiddleware(db_pool))
 
     # Routing
