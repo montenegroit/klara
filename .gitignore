@@ -3,3 +3,4 @@ venv
 .env
 data
 __pycache__
+bot/tests/.pytest_cache

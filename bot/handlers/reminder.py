@@ -17,7 +17,7 @@ reminder_text = """<b>Напоминалочка</b>
 <b>Проекты:</b>
 » <a href='https://digitalmonte.notion.site/Startup-Factory-b14d4371b4854a989bb104df47e9a8e8'>Startup Factory Montenegro</a>
 » Чат по вопросам <a href='https://t.me/montenegro_porez'>ВНЖ/Налогов/Фирм</a>
-» Оффтопить лучше в <a href='https://t.me/ITemigration'>ITemigration</a>
+» Чат коворкинга в Будве в <a href='https://t.me/Itbranchhouse'>Itbranchhouse</a>
 » Самый нужный бот в ЧГ <a href='https://t.me/MontenegroDoctorsBot'>MontenegroDoctorsBot</a>
 
 <b>Подписывайтесь на наши соц.сети и каналы:</b>
@@ -27,8 +27,13 @@ reminder_text = """<b>Напоминалочка</b>
 » <a href='https://t.me/montenegro_it_events'>Канал с ивентами</a>
 » <a href='https://t.me/montenegro_it_jobs'>Канал с вакансиями</a>
 
+<b>Когда митап?</b>
+» 28-29 января в Сплендиде
+» Будет на английском, вход 15 евро
+» https://montenegroit.github.io/meetup/
+
 Не забываем <a href='https://t.me/montenergo_it/47783'>донатить</a> на монтаж видео с митапов и пиво админам.
-Вы получите уникальную подпись, и возможность использовать расширенные команды бота
+Вы получите уникальную подпись, и возможность использовать расширенные команды бота в /help
 """
 
 
