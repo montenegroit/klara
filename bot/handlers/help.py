@@ -1,5 +1,6 @@
 import logging
 from aiogram import Router, types
+from aiogram.filters import Command
 from bot.services.releases import get_last_release_version
 
 logger = logging.getLogger(__name__)
@@ -18,7 +19,7 @@ _message = """
 """
 
 
-@router.message(commands="help")
+@router.message(Command(commands="help"))
 async def test_admin_message(message: types.Message):
     version = await get_last_release_version()
     await message.answer(_message + f"<i><a href='#'>{version}</a></i>")

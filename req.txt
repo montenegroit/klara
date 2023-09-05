@@ -1,7 +1,6 @@
-aiogram==3.0.0b3
+aiogram==3.0.0b7
 texttable==1.6.4
 wcwidth==0.2.5
-pydantic==1.9.0
 cjkwrap==2.2
 sqlalchemy==1.4.34
 alembic==1.7.7
@@ -11,5 +10,7 @@ aioredis==2.0.1
 redis==4.3.4
 httpx==0.23.0
 replicate==0.4.0
+urllib3==1.26.5
+pydantic==1.10.4
 geopy==2.3.0
 pytest-asyncio==0.21.0

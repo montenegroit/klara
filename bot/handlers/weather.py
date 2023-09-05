@@ -1,16 +1,15 @@
 import logging
-import re
+
 from aiogram import Router, types
+
+from aiogram.filters import Command
 from bot.services.weather import get_weather
 
 logger = logging.getLogger(__name__)
 router = Router()
 
-pattern = re.compile(r"^/weather (.+)$")
 
-
-@router.message(commands=pattern)
+@router.message(Command(commands="weather"))
 async def weather_handler(message: types.Message):
-    match = re.match(pattern, message.text)
-    city = match.group(1)
+    city = message.text.split()[1]
     await get_weather(message, city)

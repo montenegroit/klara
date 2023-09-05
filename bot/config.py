@@ -17,7 +17,7 @@ class Config(BaseSettings):
     github_token: Optional[str]
     github_repo: Optional[str]
     replicate_api_token: Optional[str]
-
+    chat_id: Optional[str]
 
     @validator("bot_fsm_storage")
     def validate_bot_fsm_storage(cls, v):

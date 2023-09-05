@@ -9,14 +9,17 @@ from bot.services.weather import get_temperature, get_weather
 class TestGetTemperature(unittest.TestCase):
     def test_get_temperature(self):
         json_data = {
-            "wind": 20,
-            "humidity": 50,
-            "other_data": {
-                "main": {
-                    "temporotura": 0,
-                    "weather": {"pressure": 100, "temperature": 25},
+            'wind': 20,
+            'humidity': 50,
+            'other_data': {
+                'main': {
+                    'temporotura': 0,
+                    'weather': {
+                        'pressure': 100,
+                        'temperature': 25
+                    }
                 }
-            },
+            }
         }
         expected_result = 25
         result = get_temperature(json_data)
@@ -34,10 +37,9 @@ def event_loop():
 async def test_get_weather():
     message = AsyncMock()
     message.answer = AsyncMock()
-    city = "Podgorica"
+    city = 'Podgorica'
     await get_weather(message, city)
     message.answer.assert_called_once()
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
