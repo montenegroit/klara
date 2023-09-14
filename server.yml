@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+
+  redis:
+    image: redis:6.0.9-alpine
+    restart: always
+
+  postgresql:
+    image: postgres:13.1-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./data/pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    command: bash -c "python -m bot"
+    env_file: .env
+    depends_on:
+      - postgresql
+      - redis
