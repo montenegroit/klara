@@ -4,8 +4,12 @@ services:
   redis:
     image: redis:6.0.9-alpine
     restart: always
+    logging:
+      options:
+        max-size: "100m"
+        max-file: "3"
 
-  postgresql:
+  db:
     image: postgres:13.1-alpine
     restart: always
     environment:
@@ -13,6 +17,20 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
     volumes:
-      - ./data/pgdata:/var/lib/postgresql/data
+      - klara-db-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    healthcheck:
+      test: pg_isready -U ${DB_USER}
+      interval: 2s
+      timeout: 3s
+      retries: 40
+    logging:
+      options:
+        max-size: "100m"
+        max-file: "3"
+
+volumes:
+  klara-db-data:
+    name: klara-db-data
+    external: true
