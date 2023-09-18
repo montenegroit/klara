@@ -21,7 +21,7 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: pg_isready -U ${DB_USER}
+      test: pg_isready -U postgres
       interval: 2s
       timeout: 3s
       retries: 40
