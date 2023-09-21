@@ -1,22 +1,20 @@
 import asyncio
 import logging
 
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, F
 from aiogram.client.telegram import TelegramAPIServer
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage
-from aiogram import F
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
 from bot.config import config
+from bot.handlers.banofbot import router as new_ban_router
 from bot.handlers.bans import router as ban_router
 from bot.handlers.help import router as help_router
 from bot.handlers.reminder import router as reminder_router
 from bot.handlers.replicate import router as prompt_router
 from bot.handlers.weather import router as weather_router
-from bot.handlers.banofbot import router as new_ban_router
-
 from bot.middlewares.db import DbSessionMiddleware
 from bot.middlewares.increase_message_count import IncreaseCountUserMessagesMiddleware
 
