@@ -1,25 +1,37 @@
 from typing import Optional
 
-from pydantic import PostgresDsn, RedisDsn, validator
-from pydantic_settings import BaseSettings
+from pydantic import Field, PostgresDsn, RedisDsn, validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+""" https://docs.pydantic.dev/latest/usage/pydantic_settings/ """
 
 
 class Config(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env", env_file_encoding="utf-8", env_nested_delimiter="__"
+    )
+
+    debug: Optional[str] = ""
+
     bot_token: str
     bot_fsm_storage: str
+
     postgres_dsn: PostgresDsn
     postgres_sync_dsn: str
-    redis_dsn: Optional[RedisDsn]
-    custom_bot_api: Optional[str]
+    redis_dsn: Optional[RedisDsn] = ""
+    custom_bot_api: Optional[str] = ""
     app_host: Optional[str] = "0.0.0.0"
     app_port: Optional[int] = 9000
-    webhook_domain: Optional[str]
-    webhook_path: Optional[str]
-    super_admin_id: Optional[int]
-    github_token: Optional[str]
-    github_repo: Optional[str]
-    replicate_api_token: Optional[str]
-    chat_id: Optional[str]
+    webhook_domain: Optional[str] = ""
+    webhook_path: Optional[str] = ""
+    super_admin_id: Optional[int] = 0
+    github_token: Optional[str] = ""
+    github_repo: Optional[str] = ""
+    replicate_api_token: Optional[str] = ""
+    chat_id: Optional[str] = ""
+
+    open_weather_token: Optional[str] = ""
+    weather_stack_token: Optional[str] = ""
 
     @validator("bot_fsm_storage")
     def validate_bot_fsm_storage(cls, v):
@@ -41,19 +53,24 @@ class Config(BaseSettings):
             raise ValueError("Webhook path is missing!")
         return v
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        env_nested_delimiter = "__"
+    # class Config:
+    #     env_file = ".env"
+    #     env_file_encoding = "utf-8"
+    #     env_nested_delimiter = "__"
 
 
-class WeatherConfig(BaseSettings):
-    open_weather_token: Optional[str]
-    weather_stack_token: Optional[str]
+# class WeatherConfig(BaseSettings):
+#     model_config = SettingsConfigDict(
+#         env_file=".env", env_file_encoding="utf-8", env_nested_delimiter="__"
+#     )
+#     open_weather_token: Optional[str] = ""
+#     weather_stack_token: Optional[str] = ""
 
 
-class FullConfig(Config, WeatherConfig):
-    pass
+# class FullConfig(Config, WeatherConfig):
+#     pass
 
 
-config = FullConfig()
+print(Config().model_dump())
+
+config = Config()
