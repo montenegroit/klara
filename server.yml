@@ -7,7 +7,7 @@ services:
     logging:
       options:
         max-size: "100m"
-        max-file: "3"
+        max-file: "1"
 
   db:
     image: postgres:13.1-alpine
@@ -21,14 +21,14 @@ services:
     logging:
       options:
         max-size: "100m"
-        max-file: "3"
+        max-file: "1"
 
   backend:
     build:
       context: .
       dockerfile: Dockerfile
     restart: always
-    command: bash -c "python -m bot"
+    command: bash -c "python3 -m bot"
     env_file: .env
     depends_on:
       - db
@@ -36,7 +36,7 @@ services:
     logging:
       options:
         max-size: "100m"
-        max-file: "3"
+        max-file: "1"
 
 volumes:
   klara-db-data:

@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
   redis:
@@ -7,7 +7,10 @@ services:
     logging:
       options:
         max-size: "100m"
-        max-file: "3"
+        max-file: "1"
+    mem_limit: 500M
+    mem_reservation: 100m
+    cpus: 0.3
 
   db:
     image: postgres:13.1-alpine
@@ -20,6 +23,9 @@ services:
       - klara-db-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    mem_limit: 500M
+    mem_reservation: 100m
+    cpus: 0.3
     healthcheck:
       test: pg_isready -U postgres
       interval: 2s
@@ -28,7 +34,7 @@ services:
     logging:
       options:
         max-size: "100m"
-        max-file: "3"
+        max-file: "1"
 
 volumes:
   klara-db-data:
