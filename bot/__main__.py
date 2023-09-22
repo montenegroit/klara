@@ -35,6 +35,7 @@ async def main():
 
     # Creating bot and its dispatcher
     bot = Bot(token=config.bot_token, parse_mode="HTML")
+    config.bot = bot
     if config.custom_bot_api:
         bot.session.api = TelegramAPIServer.from_base(
             config.custom_bot_api, is_local=True
@@ -49,7 +50,7 @@ async def main():
     # # Allow interaction in private chats (not groups or channels) only
     dp.message.filter(F.chat.type.in_({"group", "supergroup", "private"}))
 
-    # Register middlewares
+    # TODO Register middlewares
     # dp.message.middleware(DbSessionMiddleware(db_pool))
     # dp.message.middleware(IncreaseCountUserMessagesMiddleware())
     # dp.callback_query.middleware(DbSessionMiddleware(db_pool))
@@ -58,11 +59,11 @@ async def main():
     # dp.include_router(test_router)
 
     # dp.include_router(ban_router)
-    # dp.include_router(prompt_router)
     dp.include_router(help_router)
     # dp.include_router(reminder_router)
     dp.include_router(weather_router)
     # dp.include_router(new_ban_router)
+    dp.include_router(prompt_router)
 
     # Start
     try:

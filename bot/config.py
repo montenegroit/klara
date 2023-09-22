@@ -2,8 +2,7 @@ from typing import Optional
 
 from pydantic import Field, PostgresDsn, RedisDsn, validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
-""" https://docs.pydantic.dev/latest/usage/pydantic_settings/ """
+from aiogram import Bot, Router, types
 
 
 class Config(BaseSettings):
@@ -27,11 +26,14 @@ class Config(BaseSettings):
     super_admin_id: Optional[int] = 0
     github_token: Optional[str] = ""
     github_repo: Optional[str] = ""
-    replicate_api_token: Optional[str] = ""
+    replicate_api_token: Optional[str] = None
     chat_id: Optional[str] = ""
 
     open_weather_token: Optional[str] = ""
     weather_stack_token: Optional[str] = ""
+
+    bot: Optional[Bot] = None
+    prompt_replicate_model: Optional[str] = None
 
     @validator("bot_fsm_storage")
     def validate_bot_fsm_storage(cls, v):
@@ -71,5 +73,5 @@ class Config(BaseSettings):
 #     pass
 
 
-# print(Config().model_dump())
+print(Config().model_dump())
 config = Config()
