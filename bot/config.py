@@ -19,7 +19,7 @@ class Config(BaseSettings):
     postgres_dsn: PostgresDsn
     postgres_sync_dsn: str
     redis_dsn: Optional[RedisDsn] = ""
-    custom_bot_api: Optional[str] = ""
+    custom_bot_api: Optional[str] = None
     app_host: Optional[str] = "0.0.0.0"
     app_port: Optional[int] = 9000
     webhook_domain: Optional[str] = ""

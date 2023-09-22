@@ -4,7 +4,7 @@ from aiogram.filters import Command
 from bot.services.releases import get_last_release_version
 
 logger = logging.getLogger(__name__)
-router = Router()
+router = Router(name=__name__)
 
 _message = """
 Вот список моих команд:
@@ -19,7 +19,7 @@ _message = """
 """
 
 
-@router.message(Command(commands="help"))
+@router.message(Command(commands="help"))  # Command(commands="help")
 async def test_admin_message(message: types.Message):
     version = await get_last_release_version()
     await message.answer(_message + f"<i><a href='#'>{version}</a></i>")

@@ -11,7 +11,9 @@ class IncreaseCountUserMessagesMiddleware(BaseMiddleware):
         event: Message,
         data: Dict[str, Any],
     ) -> Any:
-        print(event)
+        print(
+            f"income msg from user: {event.from_user.id} {event.from_user.username} : {event.text}"
+        )
         """
         message_id=18
         date=datetime.datetime(2023, 9, 22, 12, 53, 22, tzinfo=TzInfo(UTC))

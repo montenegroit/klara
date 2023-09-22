@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from aiogram import Bot, Dispatcher, F
+from aiogram import Bot, Dispatcher, F, types
 from aiogram.client.telegram import TelegramAPIServer
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage
@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
 from bot.config import config
+from bot.handlers.test import test_router
 from bot.handlers.banofbot import router as new_ban_router
 from bot.handlers.bans import router as ban_router
 from bot.handlers.help import router as help_router
@@ -45,21 +46,23 @@ async def main():
     else:
         dp = Dispatcher(storage=RedisStorage.from_url(config.redis_dsn))
 
-    # Allow interaction in private chats (not groups or channels) only
+    # # Allow interaction in private chats (not groups or channels) only
     dp.message.filter(F.chat.type.in_({"group", "supergroup", "private"}))
 
     # Register middlewares
-    dp.message.middleware(DbSessionMiddleware(db_pool))
-    dp.message.middleware(IncreaseCountUserMessagesMiddleware())
-    dp.callback_query.middleware(DbSessionMiddleware(db_pool))
+    # dp.message.middleware(DbSessionMiddleware(db_pool))
+    # dp.message.middleware(IncreaseCountUserMessagesMiddleware())
+    # dp.callback_query.middleware(DbSessionMiddleware(db_pool))
 
     # Routing
-    dp.include_router(ban_router)
-    dp.include_router(prompt_router)
+    # dp.include_router(test_router)
+
+    # dp.include_router(ban_router)
+    # dp.include_router(prompt_router)
     dp.include_router(help_router)
-    dp.include_router(reminder_router)
+    # dp.include_router(reminder_router)
     dp.include_router(weather_router)
-    dp.include_router(new_ban_router)
+    # dp.include_router(new_ban_router)
 
     # Start
     try:

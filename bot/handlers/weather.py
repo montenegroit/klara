@@ -11,5 +11,11 @@ router = Router()
 
 @router.message(Command(commands="weather"))
 async def weather_handler(message: types.Message):
-    city = message.text.split()[1]
-    await get_weather(message, city)
+    try:
+        city_list = message.text.split()
+        city = "Budva"
+        if len(city_list) > 1:
+            city = city_list[1]
+        await get_weather(message, city)
+    except:
+        await message.answer("Проверь название города")
