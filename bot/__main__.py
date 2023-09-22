@@ -27,7 +27,7 @@ async def main():
     )
 
     # Creating DB engine for PostgreSQL
-    engine = create_async_engine(config.postgres_dsn, future=True, echo=False)
+    engine = create_async_engine(str(config.postgres_dsn), future=True, echo=False)
 
     # Creating DB connections pool
     db_pool = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
