@@ -71,6 +71,5 @@ class Config(BaseSettings):
 #     pass
 
 
-print(Config().model_dump())
-
+# print(Config().model_dump())
 config = Config()
