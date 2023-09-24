@@ -7,6 +7,7 @@ class Config(BaseSettings):
     bot_token: str
     bot_fsm_storage: str
     postgres_dsn: PostgresDsn
+    postgres_sync_dsn: str
     redis_dsn: Optional[RedisDsn]
     custom_bot_api: Optional[str]
     app_host: Optional[str] = "0.0.0.0"
@@ -17,6 +18,7 @@ class Config(BaseSettings):
     github_token: Optional[str]
     github_repo: Optional[str]
     replicate_api_token: Optional[str]
+    chat_id: Optional[str]
 
     @validator("bot_fsm_storage")
     def validate_bot_fsm_storage(cls, v):
@@ -44,4 +46,13 @@ class Config(BaseSettings):
         env_nested_delimiter = "__"
 
 
-config = Config()
+class WeatherConfig(BaseSettings):
+    open_weather_token: Optional[str]
+    weather_stack_token: Optional[str]
+
+
+class FullConfig(Config, WeatherConfig):
+    pass
+
+
+config = FullConfig()

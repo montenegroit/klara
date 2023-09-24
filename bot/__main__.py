@@ -14,8 +14,11 @@ from bot.handlers.bans import router as ban_router
 from bot.handlers.help import router as help_router
 from bot.handlers.reminder import router as reminder_router
 from bot.handlers.replicate import router as prompt_router
+from bot.handlers.weather import router as weather_router
+from bot.handlers.banofbot import router as new_ban_router
 
 from bot.middlewares.db import DbSessionMiddleware
+from bot.middlewares.increase_message_count import IncreaseCountUserMessagesMiddleware
 
 
 async def main():
@@ -49,6 +52,7 @@ async def main():
 
     # Register middlewares
     dp.message.middleware(DbSessionMiddleware(db_pool))
+    dp.message.middleware(IncreaseCountUserMessagesMiddleware())
     dp.callback_query.middleware(DbSessionMiddleware(db_pool))
 
     # Routing
@@ -56,6 +60,8 @@ async def main():
     dp.include_router(prompt_router)
     dp.include_router(help_router)
     dp.include_router(reminder_router)
+    dp.include_router(weather_router)
+    dp.include_router(new_ban_router)
 
     # Start
     try:
