@@ -16,6 +16,7 @@ jobs:
         name: montenegroit/klara
         username: ${{ github.actor }}
         password: ${{ secrets.PACKAGE_TOKEN }}
+        tags: ${{ steps.meta.outputs.tags }}
         registry: ghcr.io
 
   deploy:

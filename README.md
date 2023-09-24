@@ -36,3 +36,22 @@ nodemon --watch ./bot --ext py --exec 'docker-compose restart backend'
 ```
 
 [![](https://badges.aleen42.com/src/buymeacoffee.svg)]()
+
+HELP
+
+Вот список моих команд:
+  klara help, ... - Получить данное сообщение
+  klara ban
+  klara events ..., ---> events week
+  
+Список команд для донатеров:
+  klara prompt, ... описание на англ - генератор изображения по тексту со stable diffusion
+  klara answer me, ...  --> "promt" +  ... -->> gpt ---> answer
+
+SuperAdmin
+  klara go quiz  -DB-qa-->  ban - 1 day
+  klara donate  (see https://github.com/montenegroit/donate-crypto/)
+
+
+------
+anync anywhere
