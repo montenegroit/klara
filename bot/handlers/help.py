@@ -9,7 +9,10 @@ from bot.handlers.releases import get_last_release_version
 logger = logging.getLogger(__name__)
 
 HELP_PREFIX = """<b>Вот список моих команд:</b>\n"""
-HELP_TEXT = """ <b>help</b> - Получить данное сообщение\n"""
+HELP_TEXT = (
+    " <b>help</b> - Получить данное сообщение\n"
+    + " <b>help, command</b> - Получить описание для команды command\n"
+)
 # Список команд для супер админа:
 #   !ro - Дать бан
 
