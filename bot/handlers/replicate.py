@@ -45,7 +45,7 @@ async def prompt_handler(data: dict):
     ):
         config.prompt_utc_date = datetime.now().replace(tzinfo=timezone.utc).timestamp()
         # prompt_list = description.split()
-        output = get_replicate(description)
+        output = await get_replicate(description)
         # output = get_replicate(" ".join(prompt_list[1:]))
         if len(output) > 0 and output[0].startswith("https://"):
             photo = types.URLInputFile(url=output[0])
@@ -57,7 +57,7 @@ async def prompt_handler(data: dict):
         return await message.answer(output)
 
 
-def get_replicate(prompt: str) -> str:
+async def get_replicate(prompt: str) -> str:
     try:
         # model = r.models.get("stability-ai/stable-diffusion")
         output = r.run(

@@ -5,11 +5,11 @@ FROM python:3.10.12
 WORKDIR /klara
 
 # Copying the dependencies file
-COPY req.txt .
+COPY requirements.txt .
 
 # Installing dependencies
 # RUN pip install --upgrade pip
-RUN pip install -r req.txt
+RUN pip install -r requirements.txt
 
 # Copying files into working directory
 COPY ./bot /
