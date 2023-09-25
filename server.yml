@@ -1,35 +1,45 @@
-version: "3"
+version: "3.8"
 
 services:
   redis:
+    env_file: .env
     image: redis:6.0.9-alpine
     restart: always
     logging:
       options:
         max-size: "100m"
         max-file: "1"
+    mem_limit: 500M
+    mem_reservation: 100m
+    cpus: 0.3
 
   db:
+    env_file: .env
     image: postgres:13.1-alpine
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:${POSTGRES_PORT}"
     volumes:
       - klara-db-data:/var/lib/postgresql/data
     logging:
       options:
         max-size: "100m"
         max-file: "1"
+    mem_limit: 500M
+    mem_reservation: 100m
+    cpus: 0.3
 
-  backend:
+  bot:
+    env_file: .env
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.bot
     restart: always
     command: bash -c "python3 -m bot"
-    env_file: .env
     depends_on:
       - db
       - redis
@@ -37,6 +47,9 @@ services:
       options:
         max-size: "100m"
         max-file: "1"
+    mem_limit: 500M
+    mem_reservation: 100m
+    cpus: 0.3
 
 volumes:
   klara-db-data:

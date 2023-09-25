@@ -32,7 +32,21 @@ async def main():
     )
 
     # Creating DB engine for PostgreSQL
-    engine = create_async_engine(str(config.postgres_dsn), future=True, echo=False)
+    # POSTGRES_DSN="postgresql+asyncpg://postgres:postgres@localhost:5432/postgres"
+    engine = create_async_engine(
+        "postgresql+asyncpg://"
+        + config.postgres_user
+        + ":"
+        + config.postgres_password
+        + "@"
+        + config.postgres_host
+        + ":"
+        + config.postgres_port
+        + "/"
+        + config.postgres_db,
+        future=True,
+        echo=False,
+    )
 
     # Creating DB connections pool
     db_pool = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)

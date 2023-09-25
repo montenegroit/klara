@@ -1,0 +1,3 @@
+mount .env file to container
+
+help

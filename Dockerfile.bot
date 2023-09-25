@@ -1,0 +1,23 @@
+# Set base image
+FROM python:3.10.12
+
+# Set the working directory
+WORKDIR /klara
+
+# Copying the dependencies file
+COPY req.txt .
+
+# Installing dependencies
+# RUN pip install --upgrade pip
+RUN pip install -r req.txt
+
+# Copying files into working directory
+COPY ./bot /
+COPY server.yml /server.yml
+COPY Dockerfile.bot /Dockerfile.bot
+COPY ./migrations /
+COPY ./alembic.ini /
+
+COPY ./entrypoint.bot.sh ./
+RUN chmod +x entrypoint.bot.sh
+ENTRYPOINT ["bash", "entrypoint.bot.sh"]

@@ -1,8 +1,8 @@
 from typing import Optional
 
-from pydantic import Field, PostgresDsn, RedisDsn, validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
 from aiogram import Bot, Router, types
+from pydantic import Field, RedisDsn, validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Config(BaseSettings):
@@ -15,8 +15,11 @@ class Config(BaseSettings):
     bot_token: str
     bot_fsm_storage: str
 
-    postgres_dsn: PostgresDsn
-    postgres_sync_dsn: str
+    postgres_user: str
+    postgres_password: str
+    postgres_db: str
+    postgres_host: str
+    postgres_port: str = 5432
 
     redis_dsn: Optional[RedisDsn] = ""
     custom_bot_api: Optional[str] = None
@@ -67,5 +70,5 @@ class Config(BaseSettings):
         return v
 
 
-print(Config().model_dump())
+# print(Config().model_dump())
 config = Config()

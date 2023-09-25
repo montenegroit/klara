@@ -8,7 +8,6 @@ from aiogram.fsm.state import default_state
 
 from bot.config import config
 from bot.keyboards.keyboard_utils import create_ban_vote_keyboard
-from bot.services.banofbot import ban_user
 from bot.states.states import Poll
 
 
