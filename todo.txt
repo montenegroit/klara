@@ -1,3 +1,4 @@
-mount .env file to container
+async replicate
+https://stackoverflow.com/questions/76442230/asynchronous-replicate-api-in-python
 
-help
+Можешь на меня сделать , привет повелитель
