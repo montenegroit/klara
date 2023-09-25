@@ -32,8 +32,10 @@ class Config(BaseSettings):
     open_weather_token: Optional[str] = ""
     weather_stack_token: Optional[str] = ""
 
+    bot_command_start_from: str
     bot: Optional[Bot] = None
     prompt_replicate_model: Optional[str] = None
+    list_of_commands: list[str] = None
 
     @validator("bot_fsm_storage")
     def validate_bot_fsm_storage(cls, v):
@@ -54,23 +56,6 @@ class Config(BaseSettings):
         if values["webhook_domain"] and not v:
             raise ValueError("Webhook path is missing!")
         return v
-
-    # class Config:
-    #     env_file = ".env"
-    #     env_file_encoding = "utf-8"
-    #     env_nested_delimiter = "__"
-
-
-# class WeatherConfig(BaseSettings):
-#     model_config = SettingsConfigDict(
-#         env_file=".env", env_file_encoding="utf-8", env_nested_delimiter="__"
-#     )
-#     open_weather_token: Optional[str] = ""
-#     weather_stack_token: Optional[str] = ""
-
-
-# class FullConfig(Config, WeatherConfig):
-#     pass
 
 
 print(Config().model_dump())

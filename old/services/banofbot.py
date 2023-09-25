@@ -14,6 +14,7 @@ from bot.states.states import Poll
 
 ban_coefficient = 0.6
 
+
 logger = logging.getLogger(__name__)
 router = Router()
 
