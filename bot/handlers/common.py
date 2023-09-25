@@ -6,6 +6,8 @@ from bot.config import config
 
 from bot.handlers.test import test_handler
 from bot.handlers.help import help_handler
+from bot.handlers.weather import weather_handler
+from bot.handlers.replicate import prompt_handler
 
 logger = logging.getLogger(__name__)
 common_router = Router(name=__name__)
@@ -41,7 +43,7 @@ async def message_handler(message: Message):
 
     if (
         message_text
-        and message_text[: len(config.bot_command_start_from)]
+        and message_text[: len(config.bot_command_start_from)].lower()
         == config.bot_command_start_from
         # and isinstance(member, (types.ChatMemberOwner, types.ChatMemberAdministrator))
     ):
@@ -59,22 +61,35 @@ async def message_handler(message: Message):
         command_enabled = command in config.list_of_commands
 
         logger.warning(
-            f"command %s: %s, %s",
+            "command %s: %s, %s",
             "enabled" if command_enabled else "disabled",
             command,
             command_data,
         )
 
-        data = {"message": message}
+        data = {
+            "command": command,
+            "command_data": command_data,
+            "message": message,
+            "user": member,
+            "command_match": command_match,
+        }
 
         if command == "":
             await test_handler(data)
             return
 
         if command_enabled:
-            match command:
-                case "help":
-                    await help_handler(data)
-                    return
-                case _:
-                    pass
+            await command_match(data)
+
+
+async def command_match(data: dict):
+    match data["command"]:
+        case "help":
+            return await help_handler(data)
+        case "weather":
+            return await weather_handler(data)
+        case "prompt":
+            return await prompt_handler(data)
+        case _:
+            pass

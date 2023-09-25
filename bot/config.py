@@ -17,16 +17,24 @@ class Config(BaseSettings):
 
     postgres_dsn: PostgresDsn
     postgres_sync_dsn: str
+
     redis_dsn: Optional[RedisDsn] = ""
     custom_bot_api: Optional[str] = None
     app_host: Optional[str] = "0.0.0.0"
     app_port: Optional[int] = 9000
+
     webhook_domain: Optional[str] = ""
     webhook_path: Optional[str] = ""
+    default_city_for_weather: Optional[str] = "N"
+
     super_admin_id: Optional[int] = 0
     github_token: Optional[str] = ""
     github_repo: Optional[str] = ""
+
     replicate_api_token: Optional[str] = None
+    prompt_utc_date: Optional[str] = ""
+    prompt_seconds_interval: str = "180"
+
     chat_id: Optional[str] = ""
 
     open_weather_token: Optional[str] = ""
@@ -35,7 +43,8 @@ class Config(BaseSettings):
     bot_command_start_from: str
     bot: Optional[Bot] = None
     prompt_replicate_model: Optional[str] = None
-    list_of_commands: list[str] = None
+    list_of_commands: list[str] = ["help"]
+    command_data_to_get_help: str = "get_help_text"
 
     @validator("bot_fsm_storage")
     def validate_bot_fsm_storage(cls, v):

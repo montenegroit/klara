@@ -1,6 +1,6 @@
 import logging
 import re
-
+from datetime import datetime, timezone
 import httpx
 import replicate
 from aiogram import Bot, Router, types
@@ -10,26 +10,43 @@ from bot.config import config
 
 logger = logging.getLogger(__name__)
 r = replicate.Client(api_token=config.replicate_api_token)
-router = Router()
+
+HELP_TEXT = """ <b>prompt, description</b> - Получить картинку по description\n"""
+WAIT_ABOUT = """ Запрос пропущен. Ожидайте в секундах: """
 
 
-@router.message()
-async def prompt(message: types.Message):
+async def prompt_handler(data: dict):
+    if data["command_data"] == config.command_data_to_get_help:
+        return HELP_TEXT
+
     abot = config.bot
+    message = data["message"]
 
-    # member = await abot.get_chat_member(
-    #     chat_id=message.chat.id,
-    #     user_id=message.from_user.id,
-    # )
+    utc_now = datetime.now().replace(tzinfo=timezone.utc).timestamp()
+    utc_prev_date = config.prompt_utc_date
+    if utc_prev_date != "":
+        utc_prev_date = int(utc_prev_date)
+        # logger.warning(
+        #     f"{int(utc_now)}-{int(utc_prev_date)}<{int(config.prompt_seconds_interval)}"
+        # )
+        difference_in_seconds = int(utc_now) - int(utc_prev_date)
+        if difference_in_seconds < int(config.prompt_seconds_interval):
+            logger.warning("prompt skipped")
+            await message.answer(
+                WAIT_ABOUT
+                + str(int(config.prompt_seconds_interval) - difference_in_seconds)
+            )
+            return
 
-    # print(f"prompt: {message.text}")
+    description = data["command_data"]
     if (
-        message.text
-        and "prompt" in message.text
+        description
         # and isinstance(member, (types.ChatMemberOwner, types.ChatMemberAdministrator))
     ):
-        prompt_list = message.text.split()
-        output = get_replicate(" ".join(prompt_list[1:]))
+        config.prompt_utc_date = datetime.now().replace(tzinfo=timezone.utc).timestamp()
+        # prompt_list = description.split()
+        output = get_replicate(description)
+        # output = get_replicate(" ".join(prompt_list[1:]))
         if len(output) > 0 and output[0].startswith("https://"):
             photo = types.URLInputFile(url=output[0])
             return await abot.send_photo(

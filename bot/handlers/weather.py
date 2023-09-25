@@ -7,10 +7,28 @@ from aiogram.filters import Command
 from geopy.geocoders import Nominatim
 
 from bot.config import config
-from bot.services.weather import get_weather
 
 logger = logging.getLogger(__name__)
-router = Router()
+
+HELP_TEXT = """ <b>weather, city</b> - Узнать погоду в городе city\n"""
+TEST_CITY_NAME = "Проверь название города"
+TEMPERATURE_IN_CITY = "Температура в городе"
+
+
+async def weather_handler(data: dict):
+    if data["command_data"] == config.command_data_to_get_help:
+        return HELP_TEXT
+
+    try:
+        city_list = data["command_data"].split()
+        logger.warning(city_list)
+        city = config.default_city_for_weather
+        if len(city_list) >= 1:
+            city = city_list[0].strip()
+        answer = await get_weather(city)
+    except:
+        answer = TEST_CITY_NAME
+    await data["message"].answer(answer)
 
 
 def get_coordinates(city_name: str) -> str or None:
@@ -58,12 +76,12 @@ def get_temperature(json_data: dict) -> int or float:
                 return result
 
 
-async def get_weather(message: types.Message, city: str):
+async def get_weather(city: str):
     location = get_coordinates(city)
     try:
         latitude, longitude = location.latitude, location.longitude
     except AttributeError:
-        await message.answer("Проверь название города")
+        return TEST_CITY_NAME
     else:
         urls = get_urls(latitude, longitude)
         async with httpx.AsyncClient() as client:
@@ -78,16 +96,4 @@ async def get_weather(message: types.Message, city: str):
         temperature_text = "\n".join(
             f"{i}. {name}: {t} C°" for i, (name, t) in enumerate(temperature, start=1)
         )
-        await message.answer(f"Температура в городе {city}:\n{temperature_text}")
-
-
-@router.message(Command(commands="weather"))
-async def weather_handler(message: types.Message):
-    try:
-        city_list = message.text.split()
-        city = "Budva"
-        if len(city_list) > 1:
-            city = city_list[1]
-        await get_weather(message, city)
-    except:
-        await message.answer("Проверь название города")
+        return TEMPERATURE_IN_CITY + f" {city}:\n{temperature_text}"
