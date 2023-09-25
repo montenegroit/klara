@@ -13,6 +13,14 @@ logger = logging.getLogger(__name__)
 common_router = Router(name=__name__)
 
 
+def bot_name_length(message_text: str):
+    """search inside bot names list and return the length if founded"""
+    for name in config.bot_command_start_from:
+        if message_text[: len(name)].lower() == name:
+            return len(name)
+    return 0
+
+
 @common_router.message()
 async def message_handler(message: Message):
     abot = config.bot
@@ -41,10 +49,10 @@ async def message_handler(message: Message):
     # if message_text:
     #     logger.warning(f"{member}: {message_text}")
 
+    bot_name_len = bot_name_length(message_text)
     if (
-        message_text
-        and message_text[: len(config.bot_command_start_from)].lower()
-        == config.bot_command_start_from
+        bot_name_len
+        != 0
         # and isinstance(member, (types.ChatMemberOwner, types.ChatMemberAdministrator))
     ):
         comma_index = message_text.find(",")
@@ -54,9 +62,7 @@ async def message_handler(message: Message):
         else:
             comma_index = len(message_text)
 
-        command = message_text[
-            len(config.bot_command_start_from) + 1 : comma_index
-        ].strip()
+        command = message_text[bot_name_len + 1 : comma_index].strip()
 
         command_enabled = command in config.list_of_commands
 

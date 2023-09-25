@@ -30,7 +30,7 @@ class Config(BaseSettings):
     webhook_path: Optional[str] = ""
     default_city_for_weather: Optional[str] = "N"
 
-    super_admin_id: Optional[int] = 0
+    super_admin_id: int = 0
     github_token: Optional[str] = ""
     github_repo: Optional[str] = ""
 
@@ -43,7 +43,7 @@ class Config(BaseSettings):
     open_weather_token: Optional[str] = ""
     weather_stack_token: Optional[str] = ""
 
-    bot_command_start_from: str
+    bot_command_start_from: list[str]
     bot: Optional[Bot] = None
     prompt_replicate_model: Optional[str] = None
     list_of_commands: list[str] = ["help"]
