@@ -90,7 +90,7 @@ async def message_handler(message: Message):
 
 
 async def command_match(data: dict):
-    match data["command"]:
+    match data["command"].lower():
         case "help":
             return await help_handler(data)
         case "weather":
