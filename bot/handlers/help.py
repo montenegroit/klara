@@ -21,10 +21,10 @@ HELP_TEXT = (
 
 
 async def help_handler(data: dict):
-    if data["command_data"] == config.command_data_to_get_help:
+    if data["command_data"].lower() == config.command_data_to_get_help:
         return HELP_TEXT
 
-    command_data = data["command_data"]
+    command_data = data["command_data"].lower()
     if command_data in config.list_of_commands:
         text = await data["command_match"](
             {"command": command_data, "command_data": config.command_data_to_get_help}

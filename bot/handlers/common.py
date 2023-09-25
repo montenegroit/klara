@@ -62,7 +62,7 @@ async def message_handler(message: Message):
         else:
             comma_index = len(message_text)
 
-        command = message_text[bot_name_len + 1 : comma_index].strip()
+        command = message_text[bot_name_len + 1 : comma_index].strip().lower()
 
         command_enabled = command in config.list_of_commands
 
@@ -90,7 +90,7 @@ async def message_handler(message: Message):
 
 
 async def command_match(data: dict):
-    match data["command"].lower():
+    match data["command"]:
         case "help":
             return await help_handler(data)
         case "weather":

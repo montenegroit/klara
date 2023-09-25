@@ -16,7 +16,7 @@ WAIT_ABOUT = """ Запрос пропущен. Ожидайте в секунд
 
 
 async def prompt_handler(data: dict):
-    if data["command_data"] == config.command_data_to_get_help:
+    if data["command_data"].lower() == config.command_data_to_get_help:
         return HELP_TEXT
 
     abot = config.bot

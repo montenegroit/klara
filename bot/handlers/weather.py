@@ -16,11 +16,11 @@ TEMPERATURE_IN_CITY = "Температура в городе"
 
 
 async def weather_handler(data: dict):
-    if data["command_data"] == config.command_data_to_get_help:
+    if data["command_data"].lower() == config.command_data_to_get_help:
         return HELP_TEXT
 
     try:
-        city_list = data["command_data"].split()
+        city_list = data["command_data"].split().lower()
         logger.warning(city_list)
         city = config.default_city_for_weather
         if len(city_list) >= 1:
