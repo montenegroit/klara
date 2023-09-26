@@ -20,11 +20,11 @@ async def weather_handler(data: dict):
         return HELP_TEXT
 
     try:
-        city_list = data["command_data"].split().lower()
-        logger.warning(city_list)
+        city_list = data["command_data"].split()
+        # logger.warning(city_list)
         city = config.default_city_for_weather
         if len(city_list) >= 1:
-            city = city_list[0].strip()
+            city = city_list[0].strip().lower()
         answer = await get_weather(city)
     except:
         answer = TEST_CITY_NAME
@@ -96,4 +96,4 @@ async def get_weather(city: str):
         temperature_text = "\n".join(
             f"{i}. {name}: {t} C°" for i, (name, t) in enumerate(temperature, start=1)
         )
-        return TEMPERATURE_IN_CITY + f" {city}:\n{temperature_text}"
+        return TEMPERATURE_IN_CITY + f" {city.upper()}:\n{temperature_text}"
