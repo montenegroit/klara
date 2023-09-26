@@ -1,4 +1,4 @@
-name: Publish to Registry
+name: Deploy klara
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Docker down and up on remote host
+      - name: Docker build and up on remote host
         uses: appleboy/ssh-action@master
         env:
           ENVIRONMENT: development
@@ -21,5 +21,5 @@ jobs:
             ls -al
             cd ${{ secrets.KLARA_PATH }}
             ls -al
-            docker-compose -f server.yml down
+            git pull
             docker-compose -f server.yml up --build -d

@@ -22,7 +22,9 @@ def bot_name_length(message_text: str):
                 if message_text[: len(name)].lower() == name:
                     return len(name)
         except Exception as exception:
-            logger.warning(f"{message_text}. {names_list}")
+            logger.warning(
+                f"bot_name_length message_text:{message_text}, names_list:{names_list}"
+            )
     return 0
 
 
