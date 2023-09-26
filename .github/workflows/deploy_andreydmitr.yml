@@ -10,6 +10,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.KLARA_HOST }}
+          port: ${{ secrets.KLARA_PORT }}
           username: ${{ secrets.KLARA_USER }}
           password: ${{ secrets.KLARA_PASSWORD }}
           script: |
