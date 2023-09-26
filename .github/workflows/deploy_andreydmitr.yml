@@ -18,4 +18,4 @@ jobs:
             cd ${{ secrets.KLARA_PATH }}
             ls -al
             git pull
-            docker-compose -f server.yml up --build -d
+            docker compose -f server.yml up --build -d
