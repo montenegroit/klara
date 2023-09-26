@@ -1,9 +1,6 @@
 name: Deploy klara
 
-on:
-  push:
-    tags:
-      - "*"
+on: [push]
 
 jobs:
   build:
@@ -11,8 +8,6 @@ jobs:
     steps:
       - name: Docker build and up on remote host
         uses: appleboy/ssh-action@master
-        env:
-          ENVIRONMENT: development
         with:
           host: ${{ secrets.KLARA_HOST }}
           username: ${{ secrets.KLARA_USER }}
