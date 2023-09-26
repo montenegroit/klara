@@ -3,7 +3,7 @@ name: Deploy klara
 on: [push]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Docker build and up on remote host
