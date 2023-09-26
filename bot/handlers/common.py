@@ -15,9 +15,12 @@ common_router = Router(name=__name__)
 
 def bot_name_length(message_text: str):
     """search inside bot names list and return the length if founded"""
-    for name in config.bot_command_start_from:
-        if message_text[: len(name)].lower() == name:
-            return len(name)
+    try:
+        for name in config.bot_command_start_from:
+            if message_text[: len(name)].lower() == name:
+                return len(name)
+    except Exception as exception:
+        logger.warning(f"{message_text}. {config.bot_command_start_from}")
     return 0
 
 
