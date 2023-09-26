@@ -19,3 +19,4 @@ jobs:
             ls -al
             git pull
             docker compose -f server.yml up --build -d
+            docker ps -a
