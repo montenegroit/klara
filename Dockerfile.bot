@@ -18,7 +18,7 @@ RUN pip install -r requirements.txt
 
 # Copying files into working directory
 COPY ./bot ./bot
-COPY ./migrations ./
+COPY ./migrations ./migrations
 COPY ./alembic.ini ./alembic.ini
 
 COPY ./entrypoint.bot.sh ./
