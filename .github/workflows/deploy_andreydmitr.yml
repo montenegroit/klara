@@ -14,9 +14,7 @@ jobs:
           username: ${{ secrets.KLARA_USER }}
           password: ${{ secrets.KLARA_PASSWORD }}
           script: |
-            ls -al
             cd ${{ secrets.KLARA_PATH }}
-            ls -al
             git pull
             docker compose -f server.yml up --build -d
             docker ps -a
