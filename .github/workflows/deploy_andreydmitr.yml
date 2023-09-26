@@ -1,6 +1,9 @@
 name: Deploy klara
 
-on: [push]
+on:
+  push:
+    branches:
+      - andreydmitr_wip
 
 jobs:
   deploy:
