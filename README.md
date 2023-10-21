@@ -52,16 +52,24 @@ help
 prompt
 
 TODO
+-1) VANYA --- ПОДНЯТЬ EVENTS
+0) events.py ---> EVENTS
+   message -> #events -> EVENTS
+   message -> Клара, че по ивентам <----
 
-восстановить бан
-donate через https://github.com/montenegroit/donate-crypto/
-Призыв к донатам надо подумать как организовать
+2) NINA - восстановить бан!
+3) donate через https://github.com/montenegroit/donate-crypto/
+
+
+4) Призыв к донатам надо подумать как организовать
 https://python.langchain.com/docs/use_cases/chatbots/
 https://github.com/gkorepanov/whisper-stream
 events
 
-Удалять системные сообщения  (входе, выход) 
-Свой тест-валидация на входе 
+5) ЯНА - Удалять системные сообщения  (входе, выход, pin) 
+
+
+6) Свой тест-валидация на входе 
 Commands
 Вот список моих команд:
   klara help, ... - Получить данное сообщение  (короткая команда kh)
@@ -82,7 +90,8 @@ SuperAdmin
 
 
 
-ChatGPT
+7) ANDREY ChatGPT (Клара, подскажи)
+   "уложись в 100 символов"
 Между тем, уже месяц существует репозиторий,  GPT4Free (https://github.com/xtekky/gpt4free), где студент  нашел как прокидывать запросы к GPT-4 и GPT-3.5 и получать ответы бесплатно.  Запросы пропускаются через сайты, которые платят за доступ к GPT API, но не защитили свои собственные API. Среди таких лопухов: You.com, Quora, Bing, forefront.ai.
 
 Пример кода, чтобы бесплатно обратиться к GPT-4:
