@@ -2,15 +2,15 @@ version: '3'
 
 services:
 
-  redis:
-    extends:
-      file: docker-compose.yml
-      service: redis
-
-  postgresql:
-    extends:
-      file: docker-compose.yml
-      service: postgresql
+#  redis:
+#    extends:
+#      file: docker-compose.yml
+#      service: redis
+#
+#  postgresql:
+#    extends:
+#      file: docker-compose.yml
+#      service: postgresql
 
   backend:
     extends:

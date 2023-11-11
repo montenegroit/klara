@@ -33,23 +33,23 @@ async def main():
 
     # Creating DB engine for PostgreSQL
     # POSTGRES_DSN="postgresql+asyncpg://postgres:postgres@localhost:5432/postgres"
-    engine = create_async_engine(
-        "postgresql+asyncpg://"
-        + config.postgres_user
-        + ":"
-        + config.postgres_password
-        + "@"
-        + config.postgres_host
-        + ":"
-        + config.postgres_port
-        + "/"
-        + config.postgres_db,
-        future=True,
-        echo=False,
-    )
+    # engine = create_async_engine(
+    #     "postgresql+asyncpg://"
+    #     + config.postgres_user
+    #     + ":"
+    #     + config.postgres_password
+    #     + "@"
+    #     + config.postgres_host
+    #     + ":"
+    #     + config.postgres_port
+    #     + "/"
+    #     + config.postgres_db,
+    #     future=True,
+    #     echo=False,
+    # )
 
     # Creating DB connections pool
-    db_pool = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
+    # db_pool = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
     # Creating bot and its dispatcher
     bot = Bot(token=config.bot_token, parse_mode="HTML")
