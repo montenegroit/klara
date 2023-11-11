@@ -51,9 +51,9 @@ async def main():
     dp.message.filter(F.chat.type.in_({"group", "supergroup", "private"}))
 
     # Register middlewares
-    dp.message.middleware(DbSessionMiddleware(db_pool))
-    dp.message.middleware(IncreaseCountUserMessagesMiddleware())
-    dp.callback_query.middleware(DbSessionMiddleware(db_pool))
+    # dp.message.middleware(DbSessionMiddleware(db_pool))
+    # dp.message.middleware(IncreaseCountUserMessagesMiddleware())
+    # dp.callback_query.middleware(DbSessionMiddleware(db_pool))
 
     # Routing
     dp.include_router(ban_router)

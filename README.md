@@ -27,7 +27,7 @@
 ```
 cp .env.example .env
 # add BOT_TOKEN
-docker-composer -f docker-compose.dev.yml up -d
+docker-compose -f docker-compose.dev.yml up -d
 ```
 
 Чтобы оперативно рестартовать контейнер backend при изменениях можно поставить на локальный хост `nodemon` (`npm install --global nodemon`) и использовать его для мониторинга изменений в python-файлах:
@@ -46,7 +46,7 @@ HELP
   
 Список команд для донатеров:
   klara prompt, ... описание на англ - генератор изображения по тексту со stable diffusion
-  klara answer me, ...  --> "promt" +  ... -->> gpt ---> answer
+  klara answer me, ... --> "promt" +  ... -->> gpt ---> answer
 
 SuperAdmin
   klara go quiz  -DB-qa-->  ban - 1 day

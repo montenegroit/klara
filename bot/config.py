@@ -6,8 +6,8 @@ from pydantic import BaseSettings, PostgresDsn, RedisDsn, validator
 class Config(BaseSettings):
     bot_token: str
     bot_fsm_storage: str
-    postgres_dsn: PostgresDsn
-    postgres_sync_dsn: str
+    # postgres_dsn: PostgresDsn
+    # postgres_sync_dsn: str
     redis_dsn: Optional[RedisDsn]
     custom_bot_api: Optional[str]
     app_host: Optional[str] = "0.0.0.0"

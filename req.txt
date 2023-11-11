@@ -4,7 +4,6 @@ wcwidth==0.2.5
 cjkwrap==2.2
 sqlalchemy==1.4.34
 alembic==1.7.7
-asyncpg==0.25.0
 python-dotenv==0.20.0
 aioredis==2.0.1
 redis==4.3.4
