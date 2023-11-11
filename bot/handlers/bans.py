@@ -10,8 +10,9 @@ logger = logging.getLogger(__name__)
 router = Router()
 
 
-@router.message(Command(commands='ro', prefix='!'))
+@router.message(Command(commands="ro", prefix="!"))
 async def check(message: types.Message):
+    print(f"bans check ? {message}")
     # TODO: add all admin
     if message.from_user.id != config.super_admin_id:
         text = f"Сорян @{message.from_user.id} у тебя нету прав на это действие"

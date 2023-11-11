@@ -1,24 +1,53 @@
 from typing import Optional
 
-from pydantic import BaseSettings, PostgresDsn, RedisDsn, validator
+from aiogram import Bot, Router, types
+from pydantic import Field, RedisDsn, validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Config(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env", env_file_encoding="utf-8", env_nested_delimiter="__"
+    )
+
+    debug: Optional[str] = ""
+
     bot_token: str
     bot_fsm_storage: str
-    postgres_dsn: PostgresDsn
-    postgres_sync_dsn: str
-    redis_dsn: Optional[RedisDsn]
-    custom_bot_api: Optional[str]
+
+    postgres_user: str
+    postgres_password: str
+    postgres_db: str
+    postgres_host: str
+    postgres_port: str = 5432
+
+    redis_dsn: Optional[RedisDsn] = ""
+    custom_bot_api: Optional[str] = None
     app_host: Optional[str] = "0.0.0.0"
     app_port: Optional[int] = 9000
-    webhook_domain: Optional[str]
-    webhook_path: Optional[str]
-    super_admin_id: Optional[int]
-    github_token: Optional[str]
-    github_repo: Optional[str]
-    replicate_api_token: Optional[str]
-    chat_id: Optional[str]
+
+    webhook_domain: Optional[str] = ""
+    webhook_path: Optional[str] = ""
+    default_city_for_weather: Optional[str] = "N"
+
+    super_admin_id: int = 0
+    github_token: Optional[str] = ""
+    github_repo: Optional[str] = ""
+
+    replicate_api_token: Optional[str] = None
+    prompt_utc_date: Optional[str] = ""
+    prompt_seconds_interval: str = "180"
+
+    chat_id: Optional[str] = ""
+
+    open_weather_token: Optional[str] = ""
+    weather_stack_token: Optional[str] = ""
+
+    bot_command_start_from: list[str]
+    bot: Optional[Bot] = None
+    prompt_replicate_model: Optional[str] = None
+    list_of_commands: list[str] = ["help"]
+    command_data_to_get_help: str = "get_help_text"
 
     @validator("bot_fsm_storage")
     def validate_bot_fsm_storage(cls, v):
@@ -40,19 +69,6 @@ class Config(BaseSettings):
             raise ValueError("Webhook path is missing!")
         return v
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        env_nested_delimiter = "__"
 
-
-class WeatherConfig(BaseSettings):
-    open_weather_token: Optional[str]
-    weather_stack_token: Optional[str]
-
-
-class FullConfig(Config, WeatherConfig):
-    pass
-
-
-config = FullConfig()
+# print(Config().model_dump())
+config = Config()
