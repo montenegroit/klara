@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 HELP_TEXT = "Привет, "
 ANONYM_NAME = "Аноним"
-ADMIN_NAME = "Мой Повелитель"
+ADMIN_NAME = "Мой Повелитель &#x1F60A;"
 
 
 async def test_handler(data: dict):
