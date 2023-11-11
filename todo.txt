@@ -1,0 +1,4 @@
+async replicate
+https://stackoverflow.com/questions/76442230/asynchronous-replicate-api-in-python
+
+Можешь на меня сделать , привет повелитель

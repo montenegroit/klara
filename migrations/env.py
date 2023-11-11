@@ -41,7 +41,21 @@ def run_migrations_offline():
     script output.
 
     """
-    url = app_config.postgres_sync_dsn
+    # POSTGRES_SYNC_DSN="postgresql://postgres:postgres@localhost:5432/db_name"
+
+    url = (
+        "postgresql://"
+        + app_config.postgres_user
+        + ":"
+        + app_config.postgres_password
+        + "@"
+        + app_config.postgres_host
+        + ":"
+        + app_config.postgres_port
+        + "/"
+        + app_config.postgres_db
+    )
+
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -61,7 +75,18 @@ def run_migrations_online():
 
     """
     configuration = config.get_section(config.config_ini_section)
-    sqlalchemy_url = app_config.postgres_sync_dsn
+    sqlalchemy_url = (
+        "postgresql://"
+        + app_config.postgres_user
+        + ":"
+        + app_config.postgres_password
+        + "@"
+        + app_config.postgres_host
+        + ":"
+        + app_config.postgres_port
+        + "/"
+        + app_config.postgres_db
+    )
     configuration["sqlalchemy.url"] = sqlalchemy_url
 
     connectable = engine_from_config(
@@ -71,9 +96,7 @@ def run_migrations_online():
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()
