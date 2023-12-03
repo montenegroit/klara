@@ -43,6 +43,7 @@ HELP
   klara help, ... - Получить данное сообщение
   klara ban
   klara events ..., ---> events week
+  klara tell, ... - обратиться к ИИ
   
 Список команд для донатеров:
   klara prompt, ... описание на англ - генератор изображения по тексту со stable diffusion

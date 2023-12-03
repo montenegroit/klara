@@ -17,7 +17,7 @@ async def chatgpt_handler(data: dict):
 
     response = g4f.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        provider=g4f.Provider.ChatBase,
+        provider=g4f.Provider.ChatForAi,
         messages=[
             {
                 "role": "user",
