@@ -105,7 +105,7 @@ async def command_match(data: dict):
             return await weather_handler(data)
         case "prompt":
             return await prompt_handler(data)
-        case "tell":
+        case "скажи":
             return await chatgpt_handler(data)
         case _:
             pass
