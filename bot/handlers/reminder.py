@@ -28,7 +28,7 @@ reminder_text = """<b>Напоминалочка</b>
 » <a href='https://t.me/montenegro_it_jobs'>Канал с вакансиями</a>
 
 <b>Когда митап?</b>
-» 10 декабря в 14:00 в Сплендиде
+» 28-29 января в Сплендиде
 » Будет на английском, вход 15 евро
 » https://montenegroit.github.io/meetup/
 

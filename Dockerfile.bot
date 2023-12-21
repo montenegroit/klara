@@ -1,0 +1,26 @@
+# Set base image
+FROM python:3.10.12
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt install redis -y
+
+# Set the working directory
+WORKDIR /klara
+
+# Copying the dependencies file
+COPY requirements.txt .
+
+# Installing dependencies
+# RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# Copying files into working directory
+COPY ./bot ./bot
+COPY ./migrations ./migrations
+COPY ./alembic.ini ./alembic.ini
+
+COPY ./entrypoint.bot.sh ./
+RUN chmod +x entrypoint.bot.sh
+ENTRYPOINT ["bash", "entrypoint.bot.sh"]
