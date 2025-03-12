@@ -1,0 +1,39 @@
+DEBUG=True
+
+## PostgreSQL
+POSTGRES_HOST=localhost
+#POSTGRES_HOST=db
+
+POSTGRES_USER=__user__
+POSTGRES_PASSWORD=__pass__
+POSTGRES_DB=pguser
+POSTGRES_PORT=5432
+
+# Bot settings
+## Token (required). Get it from @BotFather
+BOT_TOKEN=__token__
+
+## FSM Storage for game data. Values allowed: memory, redis
+BOT_FSM_STORAGE='memory'
+
+## Token for weather sites
+OPEN_WEATHER_TOKEN=__token__
+WEATHER_STACK_TOKEN=__token__
+DEFAULT_CITY_FOR_WEATHER=__city__
+
+# Storages
+## Redis connection string. Required if BOT_FSM_STORAGE=redis
+REDIS_DSN=redis://redis:6379/5
+
+## Chat <@username> for banofbot
+CHAT_ID=__id__
+SUPER_ADMIN_ID=__id__
+
+REPLICATE_API_TOKEN=__token__
+#PROMPT_REPLICATE_MODEL=stability-ai/stable-diffusion:27b93a2413e7f36cd83da926f3656280b2931564ff050bf9575f1fdf9bcd7478
+PROMPT_REPLICATE_MODEL=stability-ai/stable-diffusion:ac732df83cea7fff18b8472768c88ad041fa750ff7682a21affe81863cbe77e4
+PROMPT_SECONDS_INTERVAL=60
+
+BOT_COMMAND_START_FROM=["klara","клара","кларочка"]
+LIST_OF_COMMANDS=["help","prompt","weather"]
+COMMAND_DATA_TO_GET_HELP="get_help_text"

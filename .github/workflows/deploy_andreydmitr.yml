@@ -1,0 +1,23 @@
+name: Deploy klara
+
+on:
+  push:
+    branches:
+      - andreydmitr_wip
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker build and up on remote host
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.KLARA_HOST }}
+          port: ${{ secrets.KLARA_PORT }}
+          username: ${{ secrets.KLARA_USER }}
+          password: ${{ secrets.KLARA_PASSWORD }}
+          script: |
+            cd ${{ secrets.KLARA_PATH }}
+            git pull
+            docker compose -f server.yml up --build -d
+            docker ps -a
